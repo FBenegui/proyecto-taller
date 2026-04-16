@@ -9,13 +9,24 @@ Route::get('/', function () {
 Route::get('/sobre-nosotros', function () {
     return view('sobre-nosotros');
 });
-Route::get('/contacto', function () {
-    return view('contacto');
+Route::get('/consultas', function () {
+    return view('consulta');
 });
-Route::post('/contacto', [ContactoController::class, 'procesar']);
+Route::post('/consultas', [ContactoController::class, 'procesar']);
 
 Route::get('/productos', function () {
     return view('productos');
 });
 
+Route::get('/comercializacion', function () {
+    return view('comercializacion');
+});
+
+Route::get('/contactanos', function(){
+    return view('contactanos');
+});
+
+Route::get('/terminos-y-usos', function(){          
+    return view('terminos-y-usos');
+});
 

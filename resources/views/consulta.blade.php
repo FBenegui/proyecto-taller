@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Contacto')
+@section('title', 'Consultas')
 
 @section('content')
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
             <h2>Formulario de contacto</h2>
-            <form action="{{ url('/contacto') }}" method="POST">
+            <form action="{{ url('/consultas') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Nombre</label>

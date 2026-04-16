@@ -11,10 +11,10 @@
                 <div class="card mb-4">
                     <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Producto 1">
                     <div class="card-body">
-                        <h5 class="card-title">Producto 1</h5>
-                        <p class="card-text">Descripción breve del producto 1.</p>
-                        <a href="#" class="btn btn-primary">Ver Detalles</a>
-                    </div>
+                            <h5 class="card-title">Producto 1</h5>
+                            <p class="card-text">Descripción breve del producto 1.</p>
+                            <a href="#" class="btn btn-primary">Ver Detalles</a>
+                        </div>
                 </div>
             </div>
         </div>

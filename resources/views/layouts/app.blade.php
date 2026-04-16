@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #4d8a34;">
             <div class="container">
                 <a class="navbar-brand" href="/">Mi Sitio Web</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-dark text-light py-4 mt-5">
+    <footer style="background-color: #4d8a34; color: white;" class="text-light py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
@@ -67,7 +67,7 @@
                 <div class="col-md-4">
                     <h5>Contacto</h5>
                     <p>Email: info@misitioweb.com</p>
-                    <p>Teléfono: +54 3794976333</p>
+                    <p>Teléfono: +54 3794 976 333</p>
                     <div>
                         <a href="#" class="text-light me-2">Facebook</a>
                         <a href="#" class="text-light me-2">Twitter</a>

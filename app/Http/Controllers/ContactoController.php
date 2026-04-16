@@ -11,7 +11,7 @@ class ContactoController extends Controller
  {
 $nombre = $request->input('nombre');
 $email = $request->input('email');
-//$mensaje = $request->input(mensaje);
+
 return view('exito', [
  'nombre' => $nombre,
  'email' => $email
