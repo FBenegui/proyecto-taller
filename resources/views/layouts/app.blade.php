@@ -9,9 +9,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #4d8a34;">
+        <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #73a85e;">
             <div class="container">
-                <a class="navbar-brand" href="/">Mi Sitio Web</a>
+                <a class="navbar-brand" href="/">Cebar Club</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -48,11 +48,11 @@
         @yield('content')
     </main>
 
-    <footer style="background-color: #4d8a34; color: white;" class="text-light py-4 mt-5">
+    <footer style="background-color: #73a85e; color: white;" class="text-light py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h5>Mi Sitio Web</h5>
+                    <h5>Cebar Club</h5>
                     <p>Tu sitio web confiable para todas tus necesidades.</p>
                 </div>
                 <div class="col-md-4">

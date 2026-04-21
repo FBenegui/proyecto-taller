@@ -7,10 +7,8 @@
     <div class="card">
         <div class="card-body">
             <h1 class="card-title">Sobre Nosotros</h1>
-            <p><b>Nombre:</b> Juan Pérez</p>
-            <p><b>Desde:</b> 31/03/2026 </p>
-            <p><b>De dónde somos:</b> Corrientes, Argentina</p>
-            <p><b>Buscamos:</b> la mejor comodidad para que vos puedas tomar mate</p>
+            <p>Cebar Club es una compania para la gente a la cual le gusta tomar mates, ofrecemos productos de la mejor calidad para disfrutar de algo tan especial como un mate.</p>
+            
         </div>
     </div>
 </div>
