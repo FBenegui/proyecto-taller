@@ -29,9 +29,6 @@
                             <a class="nav-link {{ request()->path() == 'sobre-nosotros' ? 'active' : '' }}" href="/sobre-nosotros">Sobre Nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == 'consultas' ? 'active' : '' }}" href="/consultas">Consultas</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {{ request()->path() == 'productos' ? 'active' : '' }}" href="/productos">Productos</a>
                         </li>
                         <li class="nav-item">
