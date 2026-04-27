@@ -5,7 +5,7 @@
 @section('content')
 <div class="container mt-5">
     <div class="card" style="width: 100%;">
-        <div class="card-body" style="text-align: left;">
+        <div class="card-body" style="text-align: left; background: linear-gradient(to bottom, #73a85e, #e9ecef, #73a85e);">
             <h1 class="card-title">Sobre Nosotros</h1>
             <p style="width: 55%; float: left; text-align: justify;">
             ¡Hola! Somos <strong>Fabrizzio</strong> y <strong>Valentin</strong>, los creadores detrás de <strong>Cebar Club</strong>.
