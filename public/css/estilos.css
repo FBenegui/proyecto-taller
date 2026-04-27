@@ -42,3 +42,109 @@ line-height: 1;
 .bg-mate {
     background-color: var(--verde-mate) !important;
 }
+
+.tarjeta {
+    background-color: #6b4;
+    text-align: center;
+    width: 300px;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 5px;
+    border: 1px solid #222;
+    padding: 20px 10px;
+    box-shadow: 0px 0px 20px #0007;
+    display: inline-block;
+    margin: 30px;
+}
+
+
+.tarjeta-title {
+    font-family: sans-serif;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.tarjeta-subtitle {
+    font-family: sans-serif;
+    font-weight: 100;
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.tarjeta-text {
+    font-family: sans-serif;
+    margin: 5px;
+    font-size: 0.9rem;
+    color: white;
+    text-align: center;
+}
+
+h2{ 
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 12px;
+    border: none;
+    border-left: 2px solid #888;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 15px #0002;
+    margin-top: 4px;
+}   
+
+textarea{
+    min-width: 100%;
+    resize: none;
+    min-height: 100px;
+    max-height: 200px;
+    font-family: sans-serif;
+}
+form{
+    background-color: #ededed;
+    padding: 20px 0;
+    max-width: 700px;
+    margin: auto;
+    box-shadow: 0px 0px 20px #0003;
+    margin-top: 50px;
+    border-radius: 6px;
+}
+
+.form-imput{
+    display: flex;
+    flex-direction: column;
+    margin: 6px 20px;
+}
+
+label {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+    margin-left: 12px;
+    display: block;
+}
+
+button {
+    background-color: var(--verde-mate);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 6px 12px;
+}
+
+
+
