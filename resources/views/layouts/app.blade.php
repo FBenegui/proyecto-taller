@@ -64,7 +64,7 @@
                     <h5 class="fw-bold">Enlaces Rápidos</h5>
                     <ul class="list-unstyled">
                         <li><a href="/" class="text-light text-decoration-none">Inicio</a></li>
-                        <li><a href="/sobre-mi" class="text-light text-decoration-none">Sobre Nosotros</a></li>
+                        <li><a href="/sobre-nosotros" class="text-light text-decoration-none">Sobre Nosotros</a></li>
                         <li><a href="/productos" class="text-light text-decoration-none">Productos</a></li>
                         <li><a href="/contactanos" class="text-light text-decoration-none">Contáctanos</a></li>
                     </ul>
@@ -82,7 +82,7 @@
             </div>
             <hr class="my-4 border-light opacity-50">
             <div class="text-center">
-                <p class="mb-0">&copy; 2023 Mi Sitio Web. Todos los derechos reservados.</p>
+                <p class="mb-0">&copy; 2026 Mi Sitio Web. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>

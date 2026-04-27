@@ -1,44 +1,119 @@
-/* 
-body {
-font-family: Georgia, 'Times New Roman', Times, serif;
-background-color: #f4f4f4;
-margin: 70px;
-}
-
-.container {
-background: white;
-padding: 20px;
-margin: 20px auto;
-border-radius: 10px;
-max-width: 600px;
-}
-
-h1 {
-color: #333;
-}
-
-p {
-line-height: 1;
-}
-
-.navbar {
- background-color: #73a85e;
- padding: 12px;
-}
-.navbar a {
- color: #73a85e;
- text-decoration: none;
- margin-right: 15px;
- font-weight: bold;
-}
-.navbar a:hover {
- text-decoration: underline;
-} */
-
 :root {
-    --verde-mate: #73a85e; /* Tu verde original */
+    --verde-mate: #73a85e;
 }
 
 .bg-mate {
     background-color: var(--verde-mate) !important;
+}
+
+.seccion-titulo-label {
+    display: block;
+    color: #73a85e;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.seccion-titulo {
+    font-weight: 800;
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.seccion-subtitulo {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+.canal-card {
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.canal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.canal-card.destacada {
+    border: 2px solid #73a85e;
+    box-shadow: 0 8px 20px rgba(115, 168, 94, 0.15);
+}
+
+.canal-icon {
+    width: 56px;
+    height: 56px;
+    background-color: rgba(115, 168, 94, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.canal-icon svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: #73a85e;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.canal-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+}
+
+.canal-card p {
+    color: #6c757d;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.canal-badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    background-color: #f1f3f5;
+    border-radius: 20px;
+}
+
+.canal-badge-destacada {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #73a85e;
+    border-radius: 20px;
+}
+
+.producto-card .card-img-top {
+    height: 380px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.producto-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
 }
