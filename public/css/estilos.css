@@ -4,25 +4,29 @@ font-family: Georgia, 'Times New Roman', Times, serif;
 background-color: #f4f4f4;
 margin: 70px;
 }
+
 .container {
 background: white;
 padding: 20px;
+margim: 20px auto;
 border-radius: 10px;
 max-width: 600px;
 }
+
 h1 {
 color: #333;
 }
+
 p {
-line-height: 1.6;
+line-height: 1;
 }
 
 .navbar {
- background-color: #333;
- padding: 10px;
+ background-color: #73a85e;
+ padding: 12px;
 }
 .navbar a {
- color: white;
+ color: #73a85e;
  text-decoration: none;
  margin-right: 15px;
  font-weight: bold;
