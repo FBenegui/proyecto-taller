@@ -2,8 +2,18 @@
     --verde-mate: #73a85e;
 }
 
+/* Eliminar margen por defecto del body */
+body {
+    margin: 0;
+}
+
 .bg-mate {
     background-color: var(--verde-mate) !important;
+}
+
+/* Eliminar espacio extra del shadow en el navbar */
+.navbar.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075) !important;
 }
 
 .seccion-titulo-label {
@@ -247,5 +257,19 @@ button {
     margin: 6px 12px;
 }
 
+.hero-slide {
+    height: 750px;
+}
 
+@media (max-width: 768px) {
+    .hero-slide {
+        height: 350px; 
+    }
+}
 
+.hero-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
