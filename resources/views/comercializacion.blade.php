@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mt-5 mb-5">
         <span class="seccion-titulo-label">¿Dónde comprarnos?</span>
-        <h2 class="seccion-titulo">Canales de <span>Venta</span></h2>
+        <h2 class="seccion-titulo">Canales de Venta</h2>
         <p class="seccion-subtitulo">Encontrá nuestros productos en el canal que más te convenga.</p>
 
         <div class="row g-4 mb-5">
