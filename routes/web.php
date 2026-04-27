@@ -9,10 +9,7 @@ Route::get('/', function () {
 Route::get('/sobre-nosotros', function () {
     return view('sobre-nosotros');
 });
-Route::get('/consultas', function () {
-    return view('consulta');
-});
-Route::post('/consultas', [ContactoController::class, 'procesar']);
+Route::post('/contactanos', [ContactoController::class, 'procesar']);
 
 Route::get('/productos', function () {
     return view('productos');
