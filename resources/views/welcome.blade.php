@@ -100,4 +100,38 @@
 
     </div>
 </div>
+
+<!-- Sección de ubicación -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 text-center">
+                <h3 class="fw-bold mb-4">Visítanos en nuestro local</h3>
+                <p class="mb-4 fs-5">Estamos ubicados en el corazón de Corrientes, listos para atenderte personalmente</p>
+
+                <!-- Mapa embebido -->
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-8">
+                        <div class="ratio ratio-16x9">
+                            <iframe
+                                src="https://maps.google.com/maps?q=Junín+1533,+Corrientes,+Argentina&output=embed"
+                                width="100%"
+                                height="100%"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <strong class="fs-5">Dirección: Junín 1533, Corrientes, Argentina</strong>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+
 @endsection

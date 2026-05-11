@@ -50,7 +50,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-mate text-light py-4 mt-auto">
+    <footer class="bg-mate text-light py-5 mt-auto">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-3 mb-md-0">
@@ -70,11 +70,20 @@
                     <h5 class="fw-bold">Contacto</h5>
                     <p class="mb-1">Email: almuavalentin@gmail.com</p>
                     <p class="mb-3">Teléfono: +54 3794 976 333</p>
-                    <div>
+                    <div class="mb-3">
                         <a href="#" class="text-light me-3 text-decoration-none">Facebook</a>
                         <a href="#" class="text-light me-3 text-decoration-none">Twitter</a>
                         <a href="#" class="text-light text-decoration-none">Instagram</a>
                     </div>
+                    <p class="mb-0"><strong>Ubicación:</strong><br>
+                        <a href="https://maps.google.com/maps?q=Junín+1533,+Corrientes,+Argentina" target="_blank" class="text-light text-decoration-none d-inline-flex align-items-center">
+                            <svg width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                <path d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+                            </svg>
+                            Junín 1533, Corrientes, Argentina
+                        </a>
+                    </p>
                 </div>
             </div>
             <hr class="my-4 border-light opacity-50">

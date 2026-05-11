@@ -7,19 +7,28 @@
     <div class="card" style="width: 100%;">
         <div class="card-body" style="text-align: left; background: linear-gradient(to bottom, #73a85e, #e9ecef, #73a85e);">
             <h1 class="card-title">Sobre Nosotros</h1>
-            <p style="width: 55%; float: left; text-align: justify;">
-            ¡Hola! Somos <strong>Fabrizzio</strong> y <strong>Valentin</strong>, los creadores detrás de <strong>Cebar Club</strong>.
-            Todo empezó como empiezan las mejores ideas en nuestro país: compartiendo un mate. Entre termo y termo, nos dimos cuenta de que el mate es mucho más que una infusión; es nuestra pausa, nuestro compañero de estudio, el testigo de las mejores charlas y el punto de encuentro con los nuestros.
-            Sin embargo, como buenos fanáticos, siempre buscábamos "ese" mate perfecto. El que se adapta a la mano, el que tiene el diseño ideal, el que te acompaña a todos lados sin fallar. Así fue como pasamos de ser dos amigos tomando mate a dos emprendedores con una misión: crear y elegir mates que estén a la altura de esos momentos.
-            En <strong>Cebar Club</strong> no solo vendemos mates.</p>
-            <img src="https://imgs.search.brave.com/6-0vS5g9PoP0LpOiMWvKv7qAXZIdSAzkNAXc7oHHG8M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMw/OTIwNTA1Mi9waG90/by9lbmpveWluZy1y/aWNoLW1hdGVzLWFu/ZC1tb3VudGFpbi1s/YW5kc2NhcGVzLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1I/c2FwQ0s2bFlUYUJu/S2pIZGtZRmliVjU4/N1JyWENHQmkyYkRa/NTdabEw4PQ" alt="Imagen de cebar club" style="float: right; width: 35%; height: auto; margin-right: 40px;">            
-            <p style="width: 60%; float: right; margin-right: 10px; text-align: justify;">
-            Buscamos llevarte un pedacito de nuestra tradición con un toque moderno. Cada producto que vas a encontrar en nuestra tienda fue pensado, probado y seleccionado por nosotros mismos, porque somos nuestros clientes más exigentes. Trabajamos con dedicación (¡y mucha yerba de por medio!) para ofrecerte calidad, diseño y esa calidez que solo un buen mate te puede dar.
-            Ya sea que estés buscando tu primer mate, renovando tu equipo o buscando el regalo perfecto, queremos acompañarte.
-            Gracias por sumarte a nuestra ronda y apoyar nuestro emprendimiento. ¡Que nunca te falte un buen mate!</p>
-            <img src="https://imgs.search.brave.com/biOc2wZYPtNVv7y6edc0TPeKiRSgyq5zigxEELEPnCI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hY2Ru/LXVzLm1pdGllbmRh/bnViZS5jb20vc3Rv/cmVzLzAwNi80ODEv/MjA1L2NhdGVnb3Jp/ZXMvZHNjXzAwMjct/NjBiNGM4NWMyNDkx/NDBmZTkxMTc1NTUy/Nzc3NzkwMjEtNDgw/LTAuanBn" alt="Imagen de cebar club" style="float: left; width: 35%; height: auto; margin-left: 30px;">            
-            <h4 style="clear: both; margin-top: 20px; text-align: center;">Muchas gracias, por tenernos en cuenta, Fabrizzio y Valentin</h4>
+            <p>¡Hola! Somos Fabrizzio y Valentín, los creadores detrás de Cebar Club.
+                Todo empezó como empiezan las mejores ideas: compartiendo un mate en nuestra querida Corrientes. Entre termo y termo, nos dimos cuenta de que el mate es mucho más que una infusión; es nuestra pausa, nuestro compañero de estudio, el testigo de las mejores charlas y el punto de encuentro con los nuestros.
+                Sin embargo, como buenos fanáticos, siempre buscábamos "ese" mate perfecto. El que se adapta a la mano, el que tiene el diseño ideal, el que te acompaña a todos lados sin fallar. Así fue como pasamos de ser dos amigos tomando mate a dos emprendedores con una misión clara.
             
-    </div>
+                <h3>Nuestra Trayectoria</h3>
+                Lo que comenzó como una búsqueda personal pronto se convirtió en un proyecto real. Al principio, pasábamos horas investigando materiales, diseños y artesanos. Nos dimos cuenta de que en el mercado faltaba un espacio que reuniera calidad premium, precios justos y un verdadero sentido de pertenencia.
+                Así nació Cebar Club. Paso a paso, fuimos seleccionando nuestro primer catálogo, armando la marca y construyendo esta tienda que hoy busca llegar a las manos de materos de todas partes. Cada producto que vas a encontrar aquí fue pensado, probado y seleccionado por nosotros mismos, porque somos nuestros clientes más exigentes.
+                <br><h3>Nuestros Objetivos</h3>
+                En Cebar Club no solo vendemos mates; buscamos llevarte un pedacito de nuestra tradición con un toque moderno. 
+                <br>Nuestros objetivos principales son:
+                <ul>
+                    <li class="lista-nosotros">Elevar tu experiencia diaria: Queremos que cada cebada sea un momento especial, ofreciéndote mates y accesorios que destaquen por su ergonomía, durabilidad y estética.</li>
+                    <li class="lista-nosotros">Calidad accesible: Nos proponemos democratizar el acceso a mates de primer nivel, manteniendo siempre una excelente relación precio-calidad.</li>
+                    <li class="lista-nosotros">Fomentar la comunidad: Buscamos ser más que una tienda; queremos ser el punto de encuentro de una comunidad que valora la tradición, el diseño y las buenas costumbres.</li>
+                </ul>  
+            <h3>El Equipo detrás del Club</h3>
+            <p>Somos un equipo apasionado que trabaja con dedicación (¡y mucha yerba de por medio!) para asegurar que te lleves lo mejor:
+            <ul>
+                <li class="lista-nosotros"><strong>Fabrizzio - [Desarrollo de Producto y Calidad]:</strong> Es el encargado de la búsqueda incansable de los mejores materiales. Su enfoque está en los detalles técnicos, asegurando que cada mate, bombilla y termo cumpla con nuestros altos estándares de calidad antes de llegar a tus manos.</li>
+                <li class="lista-nosotros"><strong>Valentín - [Diseño y Experiencia del Cliente]:</strong> Es la mente creativa detrás de la identidad de Cebar Club. Se enfoca en la estética de la marca, la comunicación con nuestra comunidad y en garantizar que tu experiencia, desde que entrás a la web hasta que recibís tu pedido, sea impecable.</li>
+            </ul>
+            </p>
+        </div>
 </div>
 @endsection

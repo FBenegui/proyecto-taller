@@ -273,3 +273,8 @@ button {
     object-fit: cover;
     object-position: center;
 }
+
+.lista-nosotros {
+    padding: 5px;
+    list-style: square;
+}
