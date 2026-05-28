@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,3 +28,12 @@ Route::get('/terminos-y-usos', function(){
     return view('terminos-y-usos');
 });
 
+Route::get('/login', [AuthController::class, 'formularioLogin']);
+Route::post('/login', [AuthController::class, 'autenticar']);
+Route::get('/register', [AuthController::class, 'formularioRegistro']);
+Route::post('/register', [AuthController::class, 'registrar']);
+Route::post('/logout', [AuthController::class, 'logOut'])->name('logout');
+
+Route::middleware(['auth', 'rol:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'dashboard']);
+});
