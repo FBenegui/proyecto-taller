@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rol;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,12 +18,27 @@ class AuthController extends Controller
     }
 
     public function registrar(Request $request){
-        // Validar los datos del formulario
         $request->validate([
             'nombre' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios',
+            'apellido' => 'required|string|max:255',
+            'email' => 'required|email|unique:usuarios,email',
             'password' => 'required|min:8|confirmed',
         ]);
+
+        $clienteRole = Rol::firstOrCreate(
+            ['nombre' => 'cliente'],
+            ['descripcion' => 'Cliente del ecommerce']
+        );
+
+        Usuario::create([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'rol_id' => $clienteRole->id,
+        ]);
+
+        return redirect()->route('login')->with('exito', 'Usuario registrado exitosamente. Por favor inicia sesión.');
     }
 
     public function autenticar(Request $request){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\Usuario;
 use App\Models\Rol;
 use Illuminate\Http\Request;
@@ -29,17 +30,19 @@ class UsuarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'nombre' => 'required|string|max:100',
-            'email' => 'required|email|unique:usuarios',
-            'password' => 'required|confirmed|min:8',
-            'rol_id' => 'required|exists:roles,id',
+        $datos = $request->validated();
+
+        Usuario::create([
+            'nombre' => $datos['nombre'],
+            'apellido' => $datos['apellido'],
+            'email' => $datos['email'],
+            'password' => bcrypt($datos['password']),
+            'rol_id' => 2,
         ]);
 
-        Usuario::create($request->only(['nombre', 'email', 'password', 'rol_id']));
-        return redirect()->route('usuarios.index')->with('exito', 'Usuario creado exitosamente.');
+        return redirect()->back()->with('exito', 'Usuario registrado exitosamente.');
     }
 
     /**
