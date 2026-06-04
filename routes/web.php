@@ -45,3 +45,6 @@ Route::post('/logout', [AuthController::class, 'logOut'])->name('logout');
 Route::middleware(['auth', 'rol:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard']);
 });
+
+Route::resource('productos', productoController::class);
+Route::put('/productos/{id}/restore', [ProductoController::class, 'restore'])->name('productos.restore');
