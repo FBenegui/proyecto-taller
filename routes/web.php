@@ -48,3 +48,25 @@ Route::middleware(['auth', 'rol:admin'])->group(function () {
 
 Route::resource('productos', productoController::class);
 Route::put('/productos/{id}/restore', [ProductoController::class, 'restore'])->name('productos.restore');
+
+Route::middleware(['auth', 'rol:cliente'])->group(function () {
+    //mostrar carrito
+    Route::get('/carrito', [CarritoController::class, 'index'])
+                            ->name('cliente.carrito');
+    //agregar producto al carrito
+    Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])
+                                    ->name('carrito.agregar');
+    //Eliminar producto
+    Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])
+                                            ->name('carrito.eliminar');
+    // Confirmar compra
+    Route::post('/carrito/confirmar', [CarritoController::class, 'confirmar'])
+                                        ->name('carrito.confirmar');
+    //Vista de compra confirmada (protegida: redirige si no hay sesión) 
+    Route::get('/compra-confirmada', function () { 
+        if(!session('total'))  {
+            return redirect()->route('cliente.dashboard')
+            }     
+        return view('backend.usuarios.compra-confirmada');     
+    })->name('compra.confirmada');
+});

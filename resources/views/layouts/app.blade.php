@@ -66,7 +66,7 @@
                                 <a class="nav-link" href="/login">Login</a>
                             </li>
                             <li class="nav-item ms-2">
-                                <a class="nav-link" href="/register">Register</a>
+                                <a class="nav-link" href="/registrar">Register</a>
                             </li>
                         @endauth
                     </ul>
