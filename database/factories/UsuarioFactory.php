@@ -26,6 +26,7 @@ class UsuarioFactory extends Factory
     {
         return [
             'nombre' => fake()->name(),
+            'apellido' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

@@ -5,9 +5,10 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\productoController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
 Route::get('/sobre-nosotros', function () {
     return view('sobre-nosotros');
@@ -65,8 +66,29 @@ Route::middleware(['auth', 'rol:cliente'])->group(function () {
     //Vista de compra confirmada (protegida: redirige si no hay sesión) 
     Route::get('/compra-confirmada', function () { 
         if(!session('total'))  {
-            return redirect()->route('cliente.dashboard')
+            return redirect()->route('cliente.dashboard');
             }     
         return view('backend.usuarios.compra-confirmada');     
     })->name('compra.confirmada');
 });
+
+
+Route::get('/ver-panel', function () {
+    return view('admin.dashboard');
+});
+
+Route::get('/productos', [productoController::class, 'index']);
+
+Route::delete('/productos/{producto}', [App\Http\Controllers\productoController::class, 'destroy'])->name('productos.destroy');
+
+Route::get('/productos/crear', [App\Http\Controllers\productoController::class, 'create'])->name('productos.create');
+
+Route::post('/productos/guardar', [App\Http\Controllers\productoController::class, 'store'])->name('productos.store');
+
+Route::post('/productos/{id}/restore', [App\Http\Controllers\productoController::class, 'restore'])->name('productos.restore');
+
+Route::get('/productos/{id}/editar', [App\Http\Controllers\productoController::class, 'edit'])->name('productos.edit');
+
+Route::put('/productos/{id}', [App\Http\Controllers\productoController::class, 'update'])->name('productos.update');
+
+Route::post('/contacto/enviar', [App\Http\Controllers\ContactoController::class, 'store'])->name('contacto.store');
