@@ -74,10 +74,10 @@ Route::middleware(['auth', 'rol:cliente'])->group(function () {
 
 
 Route::get('/ver-panel', function () {
-    return view('admin.dashboard');
+    return view('backend.admin.dashboard');
 });
 
-Route::get('/productos', [productoController::class, 'index']);
+Route::get('/productos', [productoController::class, 'index'])->name('productos.index');
 
 Route::delete('/productos/{producto}', [App\Http\Controllers\productoController::class, 'destroy'])->name('productos.destroy');
 
@@ -92,3 +92,15 @@ Route::get('/productos/{id}/editar', [App\Http\Controllers\productoController::c
 Route::put('/productos/{id}', [App\Http\Controllers\productoController::class, 'update'])->name('productos.update');
 
 Route::post('/contacto/enviar', [App\Http\Controllers\ContactoController::class, 'store'])->name('contacto.store');
+
+Route::get('/mensajes', [App\Http\Controllers\ContactoController::class, 'index'])->name('mensajes.index');
+
+Route::get('/usuarios', [App\Http\Controllers\AdminController::class, 'verUsuarios'])->name('usuarios.index');
+
+Route::get('/admin/ventas', [App\Http\Controllers\AdminController::class, 'verVentas'])->name('ventas.index');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cliente', function () {
+        return view('cliente.inicio');
+    })->name('cliente.inicio');
+});

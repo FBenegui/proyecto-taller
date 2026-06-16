@@ -21,17 +21,17 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="nav-link text-dark" href="{{ route('usuarios.index') }}">
                         👥 Usuarios Registrados
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="nav-link text-dark" href="{{ route('ventas.index') }}">
                         🛒 Historial de Ventas
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="nav-link text-dark" href="{{ route('mensajes.index') }}">
                         ✉️ Bandeja de Consultas
                     </a>
                 </li>

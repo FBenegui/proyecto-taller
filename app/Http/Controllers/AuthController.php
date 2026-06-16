@@ -42,18 +42,21 @@ class AuthController extends Controller
     }
 
     public function autenticar(Request $request){
-        $credenciales = $request->only(['email', 'password']);
+    $credenciales = $request->only(['email', 'password']);
 
-        if(Auth::attempt($credenciales)){
-            $request->session()->regenerate();
-            if(Auth::user()->rol_id === 'admin'){
-                return redirect('/admin');
-            }
-            return redirect('/cliente');
+    if(Auth::attempt($credenciales)){
+        $request->session()->regenerate();
+        
+        // CAMBIO: Accedemos al nombre del rol a través de la relación
+        if(Auth::user()->rol->nombre === 'admin'){ 
+            return redirect('/admin');
         }
-        return back()->withErrors([
-            'email' => 'Las credenciales no son correctas.',
-        ]);
+        return redirect('/cliente');
+    }
+    
+    return back()->withErrors([
+        'email' => 'Las credenciales no son correctas.',
+    ]);
     }
 
     public function logOut(Request $request){

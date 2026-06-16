@@ -19,4 +19,11 @@ class ContactoController extends Controller
         // Lo devolvemos a la misma página de inicio
         return redirect()->back()->with('success', '¡Mensaje enviado con éxito! Te responderemos pronto.');
     }
+
+    public function index()
+    {
+        // Traemos todos los mensajes de la base de datos
+        $mensajes = \App\Models\Contacto::all();
+        return view('backend.mensajes.index', compact('mensajes'));
+    }
 }
