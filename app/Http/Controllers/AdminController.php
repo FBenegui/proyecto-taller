@@ -8,7 +8,11 @@ use App\Models\VentaCabecera;
 class AdminController extends Controller
 {
     public function dashboard() {
-        return view('backend.admin.dashboard');
+        $totalProductos = \App\Models\Producto::count();
+        $totalConsultas = \App\Models\Contacto::count();
+        $ventasMes = \App\Models\VentaCabecera::whereMonth('fecha_venta', now()->month)->whereYear('fecha_venta', now()->year)->count();
+
+        return view('backend.admin.dashboard', compact('totalProductos', 'totalConsultas', 'ventasMes'));
     }
 
     public function verUsuarios() {
@@ -18,7 +22,7 @@ class AdminController extends Controller
 
     public function verVentas()
     {
-        $ventas = \App\Models\VentaCabecera::all(); // Asegurate de tener el modelo Venta
+        $ventas = \App\Models\VentaCabecera::with('usuario')->get();
         return view('backend.admin.ventas.index', compact('ventas'));
     }
 }

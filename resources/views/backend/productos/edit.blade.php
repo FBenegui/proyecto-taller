@@ -9,7 +9,7 @@
                     <h4>✏️ Editar Producto</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('productos.update', $producto->id) }}" method="POST">
+                    <form action="{{ route('productos.update', $producto->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         
@@ -30,6 +30,15 @@
                                 <label class="form-label fw-bold">Stock (Unidades)</label>
                                 <input type="number" name="stock" class="form-control" required value="{{ $producto->stock }}">
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Foto del producto (opcional)</label>
+                            @if(!empty($producto->url_imagen))
+                                <div class="mb-2">
+                                    <img src="/{{ $producto->url_imagen }}" alt="imagen" class="img-fluid" style="max-height:150px;">
+                                </div>
+                            @endif
+                            <input type="file" name="imagen" accept="image/*" class="form-control">
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <a href="/productos" class="btn btn-secondary">Cancelar</a>

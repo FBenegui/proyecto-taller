@@ -9,7 +9,7 @@
                     <h4>📦 Cargar Nuevo Producto</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('productos.store') }}" method="POST">
+                    <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label fw-bold">Nombre del Producto</label>
@@ -28,6 +28,10 @@
                                 <label class="form-label fw-bold">Stock (Unidades)</label>
                                 <input type="number" name="stock" class="form-control" required placeholder="10">
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Foto del producto (opcional)</label>
+                            <input type="file" name="imagen" accept="image/*" class="form-control">
                         </div>
                         <div class="d-flex justify-content-between mt-4">
                             <a href="/productos" class="btn btn-secondary">Cancelar</a>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Usuario;
 
 class VentaCabecera extends Model
 {
@@ -13,7 +14,7 @@ class VentaCabecera extends Model
     'fecha_venta' => 'datetime',     ];     
     // Relación: una venta pertenece a un usuario     
     public function usuario() { 
-        return $this->belongsTo(User::class, 'user_id');     
+        return $this->belongsTo(Usuario::class, 'user_id');     
     }     
     // Relación: una venta tiene muchos items     
     public function detalles() {

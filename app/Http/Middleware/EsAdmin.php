@@ -10,10 +10,23 @@ class EsAdmin
 {
     public function handle(Request $request, Closure $next)
 {
-    // Verificamos si el usuario está logueado Y si tiene rol de admin
-    // (Asegurate que tu tabla users tenga una columna 'role' o 'is_admin')
-    if (auth()->check() && auth()->user()->rol === 'admin') {
-        return $next($request);
+    // Verificamos si el usuario está logueado y tiene rol de admin
+    if (auth()->check()) {
+        $user = auth()->user();
+        $userRole = $user->rol ?? null;
+        $isAdmin = false;
+
+        if ($userRole) {
+            if (is_string($userRole)) {
+                $isAdmin = $userRole === 'admin';
+            } elseif (is_object($userRole) && property_exists($userRole, 'nombre')) {
+                $isAdmin = $userRole->nombre === 'admin';
+            }
+        }
+
+        if ($isAdmin) {
+            return $next($request);
+        }
     }
 
     return redirect('/')->with('error', 'No tenés permisos de administrador.');

@@ -42,13 +42,51 @@
                         </li>
                         {{-- Auth links: login/register and user menu --}}
                         @auth
+                            @php
+                                $userRole = auth()->user()->rol ?? null;
+                                $isAdmin = false;
+                                if ($userRole) {
+                                    if (is_string($userRole)) {
+                                        $isAdmin = $userRole === 'admin';
+                                    } elseif (is_object($userRole) && property_exists($userRole, 'nombre')) {
+                                        $isAdmin = $userRole->nombre === 'admin';
+                                    }
+                                }
+                            @endphp
+
+                            @if(!$isAdmin)
+                                @php
+                                    $cartCount = 0;
+                                    if (auth()->check()) {
+                                        $carrito = \App\Models\VentaCabecera::where('user_id', auth()->id())
+                                            ->where('estado', 'carrito')
+                                            ->first();
+                                        $cartCount = $carrito ? $carrito->detalles()->count() : 0;
+                                    }
+                                @endphp
+                                <li class="nav-item ms-2">
+                                    <a class="nav-link position-relative" href="{{ auth()->check() ? route('cliente.carrito') : route('login') }}" title="Carrito">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                                            <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .485.379L2.89 5H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 14H4a.5.5 0 0 1-.491-.408L1.01 2H.5a.5.5 0 0 1-.5-.5zM3.14 6l1.25 6h8.22l1.2-6H3.14z"/>
+                                            <path d="M6 12a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                        </svg>
+                                        @if($cartCount > 0)
+                                            <span class="badge bg-danger rounded-pill position-absolute" style="top:0;right:0;transform:translate(30%,-30%);">{{ $cartCount }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                            @endif
+
                             <li class="nav-item dropdown ms-3">
                                 <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hola, {{ auth()->user()->name }}
+                                    Hola, {{ auth()->user()->nombre }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                                    @if(auth()->user()->rol === 'admin')
+                                    @if($isAdmin)
                                         <li><a class="dropdown-item" href="/admin">Panel Admin</a></li>
+                                        <li><a class="dropdown-item" href="/usuarios">Usuarios</a></li>
+                                        <li><a class="dropdown-item" href="/admin/ventas">Ventas</a></li>
+                                        <li><a class="dropdown-item" href="/mensajes">Consultas</a></li>
                                     @else
                                         <li><a class="dropdown-item" href="/carrito">Mi carrito</a></li>
                                     @endif

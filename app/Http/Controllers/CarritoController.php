@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\VentaCabecera;
+use App\Models\Producto;
+use App\Models\VentaDetalle;
+use Illuminate\Support\Facades\DB;
 
 class CarritoController extends Controller
 {
@@ -69,17 +73,48 @@ class CarritoController extends Controller
             {             
                 return back()->with('error', 'Tu carrito está vacío');         
             }         
-            $items = $carrito->detalles()->with('producto')->get();         
-            $total = $carrito->total;         
-            // Cambia estado y guarda fecha exacta de la compra         
-            $carrito->update([
-                'estado' => 'confirmado',
-                'fecha_venta' => now(),         
-            ]);         
-            // Pasa los datos por sesión a la vista de confirmación         
-            return redirect()->route('compra.confirmada')
-                            ->with('items', $items)
-                            ->with('total', $total);     
+            // recalcular para asegurar total actualizado
+            $this->recalcularTotal($carrito);
+            $items = $carrito->detalles()->with('producto')->get();
+
+            // Ejecutar en transacción y bloquear filas de producto para evitar sobreventa
+            DB::beginTransaction();
+            try {
+                $productIds = $items->pluck('producto.id')->filter()->unique()->values()->all();
+                $productos = Producto::whereIn('id', $productIds)->lockForUpdate()->get()->keyBy('id');
+
+                foreach ($items as $item) {
+                    $pid = data_get($item, 'producto.id') ?? data_get($item, 'producto_id');
+                    $cantidad = data_get($item, 'cantidad', 0);
+                    $producto = $productos->get($pid);
+                    if (!$producto) {
+                        DB::rollBack();
+                        return back()->with('error', 'Producto no encontrado en la compra');
+                    }
+                    if ($producto->stock < $cantidad) {
+                        DB::rollBack();
+                        return back()->with('error', "No hay suficiente stock para: {$producto->nombre}");
+                    }
+                    $producto->stock = $producto->stock - $cantidad;
+                    $producto->save();
+                }
+
+                // Marcar carrito como confirmado y guardar fecha
+                $carrito->update([
+                    'estado' => 'confirmado',
+                    'fecha_venta' => now(),
+                ]);
+
+                DB::commit();
+
+                $total = $carrito->total;
+                return redirect()->route('compra.confirmada')
+                                ->with('items', $items)
+                                ->with('total', $total);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return back()->with('error', 'No se pudo procesar la compra: ' . $e->getMessage());
+            }
             } 
 
     private function recalcularTotal(VentaCabecera $carrito)

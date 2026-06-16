@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Auth;
 
 class productoController extends Controller
 {
     public function index()
     {
-        // Trae los productos, incluyendo los que tienen baja lógica
-        $productos = Producto::withTrashed()->get(); 
-        
-        return view('backend.productos.index', compact('productos'));
+        // Si el usuario autenticado es admin mostramos el panel de backend
+        if (Auth::check() && method_exists(Auth::user(), 'rol') && Auth::user()->rol && Auth::user()->rol->nombre === 'admin') {
+            $productos = Producto::withTrashed()->get();
+            return view('backend.productos.index', compact('productos'));
+        }
+
+        // Para visitantes y clientes mostramos catálogo público con productos activos
+        $productos = Producto::where('activo', true)->get();
+        return view('productos', compact('productos'));
     } 
 
     public function create()
@@ -23,14 +29,32 @@ class productoController extends Controller
     public function store(Request $request)
     {
         // Guardamos lo que escribas en el formulario
-        Producto::create([
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'precio' => 'required|numeric',
+            'stock' => 'required|integer',
+            'imagen' => 'nullable|image|max:5120',
+        ]);
+
+        $data = [
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'stock' => $request->stock,
-            'categoria_id' => 1, // Le ponemos 1 para que no tire error si no hay categorías
+            'categoria_id' => 1,
             'activo' => true,
-        ]);
+        ];
+
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/','', $file->getClientOriginalName());
+            $destination = public_path('imagenes');
+            $file->move($destination, $filename);
+            $data['url_imagen'] = 'imagenes/' . $filename;
+        }
+
+        Producto::create($data);
 
         // Te devolvemos a la tabla para que veas tu producto nuevo
         return redirect('/productos');
@@ -49,13 +73,36 @@ class productoController extends Controller
     {
         // Buscamos el producto y le actualizamos los datos
         $producto = Producto::findOrFail($id);
-        
-        $producto->update([
+
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'precio' => 'required|numeric',
+            'stock' => 'required|integer',
+            'imagen' => 'nullable|image|max:5120',
+        ]);
+
+        $data = [
             'nombre' => $request->nombre,
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'stock' => $request->stock,
-        ]);
+        ];
+
+        if ($request->hasFile('imagen')) {
+            // borrar imagen anterior si existe
+            if (!empty($producto->url_imagen) && file_exists(public_path($producto->url_imagen))) {
+                @unlink(public_path($producto->url_imagen));
+            }
+
+            $file = $request->file('imagen');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9-_\.]/','', $file->getClientOriginalName());
+            $destination = public_path('imagenes');
+            $file->move($destination, $filename);
+            $data['url_imagen'] = 'imagenes/' . $filename;
+        }
+
+        $producto->update($data);
 
         // Volvemos a la tabla
         return redirect('/productos')->with('success', 'Producto actualizado.');

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\productoController;
+use App\Http\Controllers\CarritoController;
 
 Route::get('/', function () {
     return view('inicio');
@@ -14,10 +15,6 @@ Route::get('/sobre-nosotros', function () {
     return view('sobre-nosotros');
 });
 Route::post('/contactanos', [ContactoController::class, 'procesar']);
-
-Route::get('/productos', function () {
-    return view('productos');
-});
 
 Route::get('/comercializacion', function () {
     return view('comercializacion');
@@ -66,7 +63,7 @@ Route::middleware(['auth', 'rol:cliente'])->group(function () {
     //Vista de compra confirmada (protegida: redirige si no hay sesión) 
     Route::get('/compra-confirmada', function () { 
         if(!session('total'))  {
-            return redirect()->route('cliente.dashboard');
+            return redirect()->route('cliente.inicio');
             }     
         return view('backend.usuarios.compra-confirmada');     
     })->name('compra.confirmada');
