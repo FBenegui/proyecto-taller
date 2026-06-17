@@ -15,10 +15,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([RolesSeeder::class]);
+        // 1. Crear los roles
+        $adminRole = \App\Models\Rol::firstOrCreate(['nombre' => 'admin'], ['descripcion' => 'Administrador']);
+        $clienteRole = \App\Models\Rol::firstOrCreate(['nombre' => 'cliente'], ['descripcion' => 'Cliente']);
 
-        Usuario::factory()->create();
-    
+        // 2. Crear el usuario administrador
+        \App\Models\Usuario::firstOrCreate(
+            ['email' => 'admin@tienda.com'], // Busca por email para no duplicar
+            [
+                'nombre' => 'Admin',
+                'apellido' => 'Principal',
+                'password' => bcrypt('12345678'),
+                'rol_id' => $adminRole->id,
+            ]
+        );
     }
 
     
