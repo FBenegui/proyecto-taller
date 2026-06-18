@@ -21,12 +21,22 @@ class DatabaseSeeder extends Seeder
 
         // 2. Crear el usuario administrador
         \App\Models\Usuario::firstOrCreate(
-            ['email' => 'admin@tienda.com'], // Busca por email para no duplicar
+            ['email' => 'admin@tienda.com'],
             [
                 'nombre' => 'Admin',
                 'apellido' => 'Principal',
                 'password' => bcrypt('12345678'),
                 'rol_id' => $adminRole->id,
+            ]
+        );
+
+        \App\Models\Usuario::firstOrCreate(
+            ['email' => 'cliente@tienda.com'],
+            [
+                'nombre' => 'Usuario',
+                'apellido' => 'Prueba',
+                'password' => bcrypt('12345678'),
+                'rol_id' => $clienteRole->id,
             ]
         );
     }
