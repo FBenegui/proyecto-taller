@@ -57,6 +57,16 @@
                 </div>
             </div>
 
+            <div class="container mt-5">
+                <div class="rounded-4 p-5 text-center text-white" style="background-color: #73a85e;">
+                    <h3 class="fw-bold">¿Todavía no te decidiste?</h3>
+                    <p class="mb-4">Nuestro equipo de atención al cliente está listo para asesorarte en tu elección.</p>
+                    <a href="/contactanos" class="btn btn-light btn-lg px-4 rounded-pill fw-bold" style="color: #73a85e;">
+                        <i class="bi bi-chat-dots-fill"></i> Hablar con un asesor
+                    </a>
+                </div>
+            </div>
+
         </div>
 
     </div>

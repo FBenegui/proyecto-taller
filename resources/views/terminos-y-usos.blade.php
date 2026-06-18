@@ -7,7 +7,9 @@
     <div class="row mb-5">
         <div class="col-12 text-center">
             <span class="text-uppercase fw-bold" style="color: var(--verde-mate); letter-spacing: 2px; font-size: 0.9rem;">Aviso Legal</span>
-            <h1 class="display-5 fw-bold text-dark mt-2">Términos y <span class="text-mate">Usos</span></h1>
+            <h1 class="display-5 fw-bold text-dark mt-2">Términos y <span class="text-mate">Usos</span></h1><a href="#" class="btn btn-sm btn-outline-success rounded-pill ms-3">
+    <i class="bi bi-file-earmark-pdf"></i> Descargar PDF
+</a>
             <p class="lead text-muted mt-3 mx-auto" style="max-width: 700px;">
                 Transparencia y confianza en cada mate. Conocé nuestras políticas, garantías y métodos de trabajo para brindarte la mejor experiencia en Cebar Club.
             </p>
