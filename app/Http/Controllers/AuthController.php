@@ -6,6 +6,7 @@ use App\Models\Rol;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 
 class AuthController extends Controller
 {
@@ -18,12 +19,34 @@ class AuthController extends Controller
     }
 
     public function registrar(Request $request){
+        $previousLocale = App::getLocale();
+        App::setLocale('es');
+
+        $messages = [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser texto.',
+            'max' => 'El campo :attribute no debe exceder :max caracteres.',
+            'email' => 'El :attribute debe ser un correo electrónico válido.',
+            'unique' => 'El :attribute ya ha sido registrado.',
+            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
+            'confirmed' => 'La confirmación de :attribute no coincide.',
+        ];
+
+        $attributes = [
+            'nombre' => 'nombre',
+            'apellido' => 'apellido',
+            'email' => 'correo electrónico',
+            'password' => 'contraseña',
+        ];
+
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'email' => 'required|email|unique:usuarios,email',
             'password' => 'required|min:8|confirmed',
-        ]);
+        ], $messages, $attributes);
+
+        App::setLocale($previousLocale);
 
         $clienteRole = Rol::firstOrCreate(
             ['nombre' => 'cliente'],

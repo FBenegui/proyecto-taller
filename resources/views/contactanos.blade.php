@@ -56,17 +56,32 @@
                 <h4 class="mb-4 fw-bold text-center">Formulario de Contacto</h4>
                 <form action="{{ route('contacto.store') }}" method="POST" style="background: none !important; box-shadow: none !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; border: none !important;">
                     @csrf
+                    @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                    @endif
+                    @if ($errors->any())
+						<div class="alert alert-danger py-2">
+							<ul class="mb-0">
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
                     <div class="mb-3">
                         <label class="form-label">Nombre Completo</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Tu nombre..." required style="width: 100% !important; margin: 0 !important;">
+                        <input type="text" class="form-control" name="nombre" placeholder="Tu nombre..." value="{{ old('nombre') }}" required style="width: 100% !important; margin: 0 !important;">
+                        @error('nombre') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="ejemplo@correo.com" required style="width: 100% !important; margin: 0 !important;">
+                        <input type="email" class="form-control" name="email" placeholder="ejemplo@correo.com" value="{{ old('email') }}" required style="width: 100% !important; margin: 0 !important;">
+                        @error('email') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Consulta</label>
-                        <textarea class="form-control" name="mensaje" rows="4" placeholder="¿Cómo podemos ayudarte?" required style="width: 100% !important; margin: 0 !important;"></textarea>
+                        <textarea class="form-control" name="mensaje" rows="4" placeholder="¿Cómo podemos ayudarte?" required style="width: 100% !important; margin: 0 !important;">{{ old('mensaje') }}</textarea>
+                        @error('mensaje') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-lg text-white px-5" style="background-color: #73a85e; margin: 0 !important;">Enviar Mensaje</button>
