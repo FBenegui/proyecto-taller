@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Categoria;
 
 class Producto extends Model
 {
@@ -24,4 +25,9 @@ class Producto extends Model
         'stock' => 'integer',
         'activo' => 'boolean',
     ];
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'categoria_id');
+    }
 }

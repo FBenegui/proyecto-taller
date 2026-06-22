@@ -40,6 +40,15 @@
                             @endif
                             <input type="file" name="imagen" accept="image/*" class="form-control">
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Categoría</label>
+                            <select name="categoria_id" class="form-select" required>
+                                <option value="">Seleccione una categoría</option>
+                                @foreach($categorias as $cat)
+                                    <option value="{{ $cat->id }}" @if($producto->categoria_id == $cat->id) selected @endif>{{ $cat->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="d-flex justify-content-between mt-4">
                             <a href="/productos" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-warning fw-bold">Actualizar Producto</button>

@@ -65,6 +65,81 @@ class CarritoController extends Controller
         $this->recalcularTotal($carrito);         
         return back()->with('success', 'Producto eliminado');
     }
+
+    public function vaciar()
+    {
+        $carrito = $this->obtenerCarrito();
+        $carrito->detalles()->delete();
+        $this->recalcularTotal($carrito);
+        return back()->with('success', 'Carrito vaciado correctamente.');
+    }
+
+    public function incrementar($id)
+    {
+        $carrito = $this->obtenerCarrito();
+        $item = $carrito->detalles()->where('id', $id)->firstOrFail();
+
+        $producto = Producto::find($item->producto_id);
+        if (!$producto) {
+            return back()->with('error', 'Producto no encontrado.');
+        }
+
+        $nuevaCantidad = $item->cantidad + 1;
+        if ($producto->stock < $nuevaCantidad) {
+            return back()->with('error', 'No hay suficiente stock para aumentar la cantidad.');
+        }
+
+        $item->cantidad = $nuevaCantidad;
+        $item->subtotal = $item->cantidad * $item->precio_unitario;
+        $item->save();
+
+        $this->recalcularTotal($carrito);
+        return back()->with('success', 'Cantidad actualizada.');
+    }
+
+    public function decrementar($id)
+    {
+        $carrito = $this->obtenerCarrito();
+        $item = $carrito->detalles()->where('id', $id)->firstOrFail();
+
+        $item->cantidad = max(0, $item->cantidad - 1);
+        if ($item->cantidad === 0) {
+            $item->delete();
+        } else {
+            $item->subtotal = $item->cantidad * $item->precio_unitario;
+            $item->save();
+        }
+
+        $this->recalcularTotal($carrito);
+        return back()->with('success', 'Cantidad actualizada.');
+    }
+
+    public function actualizarCantidad(Request $request, $id)
+    {
+        $request->validate([
+            'cantidad' => 'required|integer|min:1',
+        ]);
+
+        $carrito = $this->obtenerCarrito();
+        $item = $carrito->detalles()->where('id', $id)->firstOrFail();
+
+        $producto = Producto::find($item->producto_id);
+        if (!$producto) {
+            return back()->with('error', 'Producto no encontrado.');
+        }
+
+        $cantidad = (int) $request->cantidad;
+        if ($cantidad > $producto->stock) {
+            return back()->with('error', 'No hay suficiente stock para esa cantidad.');
+        }
+
+        $item->cantidad = $cantidad;
+        $item->subtotal = $cantidad * $item->precio_unitario;
+        $item->save();
+
+        $this->recalcularTotal($carrito);
+        return back()->with('success', 'Cantidad actualizada.');
+    }
     
     public function confirmar()     
     {         

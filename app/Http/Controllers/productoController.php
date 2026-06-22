@@ -12,18 +12,19 @@ class productoController extends Controller
     {
         // Si el usuario autenticado es admin mostramos el panel de backend
         if (Auth::check() && method_exists(Auth::user(), 'rol') && Auth::user()->rol && Auth::user()->rol->nombre === 'admin') {
-            $productos = Producto::withTrashed()->get();
+            $productos = Producto::withTrashed()->with('categoria')->get();
             return view('backend.productos.index', compact('productos'));
         }
 
         // Para visitantes y clientes mostramos catálogo público con productos activos
-        $productos = Producto::where('activo', true)->get();
+        $productos = Producto::where('activo', true)->with('categoria')->get();
         return view('productos', compact('productos'));
     } 
 
     public function create()
     {
-        return view('backend.productos.create');
+        $categorias = \App\Models\Categoria::all();
+        return view('backend.productos.create', compact('categorias'));
     }
 
     public function store(Request $request)
@@ -34,6 +35,7 @@ class productoController extends Controller
             'descripcion' => 'nullable|string',
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
+            'categoria_id' => 'required|exists:categorias,id',
             'imagen' => 'nullable|image|max:5120',
         ]);
 
@@ -42,7 +44,7 @@ class productoController extends Controller
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'stock' => $request->stock,
-            'categoria_id' => 1,
+            'categoria_id' => $request->categoria_id,
             'activo' => true,
         ];
 
@@ -64,9 +66,8 @@ class productoController extends Controller
     {
         // Buscamos el producto específico que se quiere editar
         $producto = Producto::findOrFail($id);
-        
-        // Lo mandamos a una vista nueva llamada 'edit'
-        return view('backend.productos.edit', compact('producto'));
+        $categorias = \App\Models\Categoria::all();
+        return view('backend.productos.edit', compact('producto', 'categorias'));
     }
 
     public function update(Request $request, $id)
@@ -79,6 +80,7 @@ class productoController extends Controller
             'descripcion' => 'nullable|string',
             'precio' => 'required|numeric',
             'stock' => 'required|integer',
+            'categoria_id' => 'required|exists:categorias,id',
             'imagen' => 'nullable|image|max:5120',
         ]);
 
@@ -87,6 +89,7 @@ class productoController extends Controller
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'stock' => $request->stock,
+            'categoria_id' => $request->categoria_id,
         ];
 
         if ($request->hasFile('imagen')) {
@@ -120,5 +123,30 @@ class productoController extends Controller
         $producto = Producto::withTrashed()->findOrFail($id);
         $producto->restore();
         return redirect()->back()->with('success', 'Producto restaurado exitosamente.');
+    }
+
+    public function categoria($slug)
+    {
+        $categoria = \App\Models\Categoria::where('slug', $slug)->firstOrFail();
+        $productos = Producto::where('categoria_id', $categoria->id)
+                        ->where('activo', true)
+                        ->with('categoria')
+                        ->get();
+
+        return view('productos', compact('productos', 'categoria'));
+    }
+
+    public function show($id)
+    {
+        $producto = Producto::with('categoria')->findOrFail($id);
+
+        return view('producto', compact('producto'));
+    }
+
+    public function modal($id)
+    {
+        $producto = Producto::with('categoria')->findOrFail($id);
+
+        return view('partials.producto-modal', compact('producto'));
     }
 }

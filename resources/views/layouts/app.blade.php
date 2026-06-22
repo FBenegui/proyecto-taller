@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cebar Club | @yield('title', 'Inicio')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <link rel="icon" href="{{ asset('imagenes/icono.png') }}" type="image/png">
     
@@ -28,8 +29,22 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->path() == 'sobre-nosotros' ? 'active' : '' }}" href="/sobre-nosotros">Sobre Nosotros</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == 'productos' ? 'active' : '' }}" href="/productos">Productos</a>
+                        <li class="nav-item dropdown">
+                            @php $isProductos = request()->is('productos*'); @endphp
+                            <a class="nav-link dropdown-toggle {{ $isProductos ? 'active' : '' }}" href="#" id="productosMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                            <ul class="dropdown-menu" aria-labelledby="productosMenu">
+                                <li>
+                                    <a class="dropdown-item {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('productos.index') }}">Todos</a>
+                                </li>
+                                @foreach(\App\Models\Categoria::all() as $cat)
+                                    @php
+                                        $isActiveCat = request()->is('productos/'.$cat->slug) || (isset($categoria) && $categoria->slug === $cat->slug);
+                                    @endphp
+                                    <li>
+                                        <a class="dropdown-item {{ $isActiveCat ? 'active' : '' }}" href="{{ route('productos.categoria', $cat->slug) }}">{{ $cat->nombre }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->path() == 'comercializacion' ? 'active' : '' }}" href="/comercializacion">Comercialización</a>
@@ -89,6 +104,7 @@
                                         <li><a class="dropdown-item" href="/mensajes">Consultas</a></li>
                                     @else
                                         <li><a class="dropdown-item" href="/carrito">Mi carrito</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('cliente.compras') }}">Mis compras</a></li>
                                     @endif
                                     <li><hr class="dropdown-divider"></li>
                                     <li>

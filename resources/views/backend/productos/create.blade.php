@@ -29,6 +29,17 @@
                                 <input type="number" name="stock" class="form-control" required placeholder="10">
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Categoría</label>
+                            <select name="categoria_id" class="form-select" required>
+                                <option value="">Seleccione una categoría</option>
+                                @foreach($categorias as $cat)
+                                    <option value="{{ $cat->id }}">{{ $cat->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label fw-bold">Foto del producto (opcional)</label>
                             <input type="file" name="imagen" accept="image/*" class="form-control">

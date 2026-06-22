@@ -39,6 +39,12 @@ class DatabaseSeeder extends Seeder
                 'rol_id' => $clienteRole->id,
             ]
         );
+        
+        // Crear categorías iniciales
+        \App\Models\Categoria::firstOrCreate(['slug' => 'yerba'], ['nombre' => 'Yerba', 'slug' => 'yerba']);
+        \App\Models\Categoria::firstOrCreate(['slug' => 'mates'], ['nombre' => 'Mates', 'slug' => 'mates']);
+        \App\Models\Categoria::firstOrCreate(['slug' => 'bombillas'], ['nombre' => 'Bombillas', 'slug' => 'bombillas']);
+        \App\Models\Categoria::firstOrCreate(['slug' => 'materas'], ['nombre' => 'Materas', 'slug' => 'materas']);
     }
 
     

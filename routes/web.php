@@ -44,7 +44,7 @@ Route::middleware(['auth', 'rol:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard']);
 });
 
-Route::resource('productos', productoController::class);
+Route::resource('productos', productoController::class)->except(['show']);
 Route::put('/productos/{id}/restore', [ProductoController::class, 'restore'])->name('productos.restore');
 
 Route::middleware(['auth', 'rol:cliente'])->group(function () {
@@ -54,6 +54,12 @@ Route::middleware(['auth', 'rol:cliente'])->group(function () {
     //agregar producto al carrito
     Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])
                                     ->name('carrito.agregar');
+    // vaciar carrito
+    Route::post('/carrito/vaciar', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
+    // incrementar cantidad de un item
+    Route::post('/carrito/{id}/incrementar', [CarritoController::class, 'incrementar'])->name('carrito.incrementar');
+    Route::post('/carrito/{id}/decrementar', [CarritoController::class, 'decrementar'])->name('carrito.decrementar');
+    Route::post('/carrito/{id}/cantidad', [CarritoController::class, 'actualizarCantidad'])->name('carrito.actualizar');
     //Eliminar producto
     Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])
                                             ->name('carrito.eliminar');
@@ -67,6 +73,10 @@ Route::middleware(['auth', 'rol:cliente'])->group(function () {
             }     
         return view('backend.usuarios.compra-confirmada');     
     })->name('compra.confirmada');
+
+    // Historial de compras del cliente
+    Route::get('/cliente/compras', [\App\Http\Controllers\ClienteController::class, 'compras'])->name('cliente.compras');
+    Route::get('/cliente/compras/{id}', [\App\Http\Controllers\ClienteController::class, 'compraDetalle'])->name('cliente.compras.show');
 });
 
 
@@ -75,6 +85,20 @@ Route::get('/ver-panel', function () {
 });
 
 Route::get('/productos', [productoController::class, 'index'])->name('productos.index');
+
+// Página por categoría (SEO-friendly)
+// Nota: la ruta antigua /productos/categoria/{slug} redirige a la nueva
+Route::get('/productos/categoria/{slug}', function ($slug) {
+    return redirect()->route('productos.categoria', $slug);
+});
+
+// SEO-friendly: /productos/{slug}
+// Esta ruta debe quedar después de las rutas más específicas (crear, editar, etc.)
+Route::get('/productos/{slug}', [productoController::class, 'categoria'])->name('productos.categoria');
+
+// Detalle de producto (evita conflicto con /productos/{slug})
+Route::get('/producto/{id}', [productoController::class, 'show'])->name('producto.show');
+Route::get('/producto/modal/{id}', [productoController::class, 'modal'])->name('producto.modal');
 
 Route::delete('/productos/{producto}', [App\Http\Controllers\productoController::class, 'destroy'])->name('productos.destroy');
 
