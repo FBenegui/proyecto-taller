@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Inicio'); ?>
 
-@section('title', 'Inicio')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div id="carouselInicio" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselInicio" data-bs-slide-to="0" class="active" aria-current="true"></button>
@@ -12,13 +10,13 @@
 
     <div class="carousel-inner">
         <div class="carousel-item active hero-slide" data-bs-interval="5000">
-            <img src="{{ asset('imagenes/carrousel1.png') }}" class="d-block w-100 hero-img" alt="Mate principal">
+            <img src="<?php echo e(asset('imagenes/carrousel1.png')); ?>" class="d-block w-100 hero-img" alt="Mate principal">
         </div>
         <div class="carousel-item hero-slide" data-bs-interval="5000">
-            <img src="{{ asset('imagenes/carrousel2.png') }}" class="d-block w-100 hero-img" alt="Accesorios">
+            <img src="<?php echo e(asset('imagenes/carrousel2.png')); ?>" class="d-block w-100 hero-img" alt="Accesorios">
         </div>
         <div class="carousel-item hero-slide" data-bs-interval="5000">
-            <img src="{{ asset('imagenes/carrousel3.png') }}" class="d-block w-100 hero-img" alt="Yerba">
+            <img src="<?php echo e(asset('imagenes/carrousel3.png')); ?>" class="d-block w-100 hero-img" alt="Yerba">
         </div>
     </div>
     
@@ -52,27 +50,27 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @forelse ($productosDestacados as $producto)
+        <?php $__empty_1 = true; $__currentLoopData = $productosDestacados; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $producto): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
             <div class="col">
                 <div class="card h-100 border-0 shadow-sm producto-card">
-                    <img src="{{ asset($producto->url_imagen) }}" class="card-img-top p-3 rounded-4" alt="{{ $producto->nombre }}">
+                    <img src="<?php echo e(asset($producto->url_imagen)); ?>" class="card-img-top p-3 rounded-4" alt="<?php echo e($producto->nombre); ?>">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold">{{ $producto->nombre }}</h5>
-                        <p class="card-text text-muted">{{ Str::limit($producto->descripcion, 80) }}</p>
+                        <h5 class="card-title fw-bold"><?php echo e($producto->nombre); ?></h5>
+                        <p class="card-text text-muted"><?php echo e(Str::limit($producto->descripcion, 80)); ?></p>
                         <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="fs-5 fw-bold text-mate">${{ number_format($producto->precio, 0, ',', '.') }}</span>
+                            <span class="fs-5 fw-bold text-mate">$<?php echo e(number_format($producto->precio, 0, ',', '.')); ?></span>
                         </div>
                     </div>
                     <div class="card-footer bg-transparent border-0 pb-3">
-                        <a href="{{ route('producto.show', $producto->id) }}" class="btn btn-outline-mate w-100 fw-bold">Ver producto</a>
+                        <a href="<?php echo e(route('producto.show', $producto->id)); ?>" class="btn btn-outline-mate w-100 fw-bold">Ver producto</a>
                     </div>
                 </div>
             </div>
-        @empty
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
             <div class="col-12">
                 <div class="alert alert-info mb-0">No hay productos destacados disponibles en este momento.</div>
             </div>
-        @endforelse
+        <?php endif; ?>
     </div>
 </div>
 
@@ -109,4 +107,6 @@
     </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\almua\Herd\proyecto-taller\resources\views/inicio.blade.php ENDPATH**/ ?>

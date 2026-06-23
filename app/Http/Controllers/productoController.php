@@ -29,14 +29,32 @@ class productoController extends Controller
 
     public function store(Request $request)
     {
-        // Guardamos lo que escribas en el formulario
+        // Validación con mensajes en español y control de espacios en blanco
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
-            'precio' => 'required|numeric',
-            'stock' => 'required|integer',
+            'nombre' => 'required|string|min:2|max:255|regex:/\S/',
+            'descripcion' => 'required|string|min:10|max:1000|regex:/\S/',
+            'precio' => 'required|numeric|min:0.01',
+            'stock' => 'required|integer|min:0',
             'categoria_id' => 'required|exists:categorias,id',
-            'imagen' => 'nullable|image|max:5120',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ], [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser texto.',
+            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
+            'max' => 'El campo :attribute no debe exceder :max caracteres.',
+            'numeric' => 'El campo :attribute debe ser un número válido.',
+            'integer' => 'El campo :attribute debe ser un número entero.',
+            'exists' => 'La :attribute seleccionada no es válida.',
+            'image' => 'El archivo debe ser una imagen válida.',
+            'mimes' => 'La imagen debe ser JPG, JPEG, PNG o GIF.',
+            'regex' => 'El campo :attribute no puede estar compuesto solo por espacios en blanco.',
+        ], [
+            'nombre' => 'nombre del producto',
+            'descripcion' => 'descripción',
+            'precio' => 'precio',
+            'stock' => 'stock',
+            'categoria_id' => 'categoría',
+            'imagen' => 'imagen',
         ]);
 
         $data = [
@@ -76,12 +94,30 @@ class productoController extends Controller
         $producto = Producto::findOrFail($id);
 
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'nullable|string',
-            'precio' => 'required|numeric',
-            'stock' => 'required|integer',
+            'nombre' => 'required|string|min:2|max:255|regex:/\S/',
+            'descripcion' => 'required|string|min:10|max:1000|regex:/\S/',
+            'precio' => 'required|numeric|min:0.01',
+            'stock' => 'required|integer|min:0',
             'categoria_id' => 'required|exists:categorias,id',
-            'imagen' => 'nullable|image|max:5120',
+            'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ], [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser texto.',
+            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
+            'max' => 'El campo :attribute no debe exceder :max caracteres.',
+            'numeric' => 'El campo :attribute debe ser un número válido.',
+            'integer' => 'El campo :attribute debe ser un número entero.',
+            'exists' => 'La :attribute seleccionada no es válida.',
+            'image' => 'El archivo debe ser una imagen válida.',
+            'mimes' => 'La imagen debe ser JPG, JPEG, PNG o GIF.',
+            'regex' => 'El campo :attribute no puede estar compuesto solo por espacios en blanco.',
+        ], [
+            'nombre' => 'nombre del producto',
+            'descripcion' => 'descripción',
+            'precio' => 'precio',
+            'stock' => 'stock',
+            'categoria_id' => 'categoría',
+            'imagen' => 'imagen',
         ]);
 
         $data = [

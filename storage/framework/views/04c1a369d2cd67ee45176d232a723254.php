@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cebar Club | @yield('title', 'Inicio')</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Cebar Club | <?php echo $__env->yieldContent('title', 'Inicio'); ?></title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     
-    <link rel="icon" href="{{ asset('imagenes/icono.png') }}" type="image/png">
+    <link rel="icon" href="<?php echo e(asset('imagenes/icono.png')); ?>" type="image/png">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('css/estilos.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/estilos.css')); ?>">
 </head>
 
 <body class="d-flex flex-column min-vh-100 bg-light">
@@ -24,40 +24,40 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == '/' ? 'active' : '' }}" href="/">Inicio</a>
+                            <a class="nav-link <?php echo e(request()->path() == '/' ? 'active' : ''); ?>" href="/">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == 'sobre-nosotros' ? 'active' : '' }}" href="/sobre-nosotros">Sobre Nosotros</a>
+                            <a class="nav-link <?php echo e(request()->path() == 'sobre-nosotros' ? 'active' : ''); ?>" href="/sobre-nosotros">Sobre Nosotros</a>
                         </li>
                         <li class="nav-item dropdown">
-                            @php $isProductos = request()->is('productos*'); @endphp
-                            <a class="nav-link dropdown-toggle {{ $isProductos ? 'active' : '' }}" href="#" id="productosMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                            <?php $isProductos = request()->is('productos*'); ?>
+                            <a class="nav-link dropdown-toggle <?php echo e($isProductos ? 'active' : ''); ?>" href="#" id="productosMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
                             <ul class="dropdown-menu" aria-labelledby="productosMenu">
                                 <li>
-                                    <a class="dropdown-item {{ request()->is('productos') ? 'active' : '' }}" href="{{ route('productos.index') }}">Todos</a>
+                                    <a class="dropdown-item <?php echo e(request()->is('productos') ? 'active' : ''); ?>" href="<?php echo e(route('productos.index')); ?>">Todos</a>
                                 </li>
-                                @foreach(\App\Models\Categoria::all() as $cat)
-                                    @php
+                                <?php $__currentLoopData = \App\Models\Categoria::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php
                                         $isActiveCat = request()->is('productos/'.$cat->slug) || (isset($categoria) && $categoria->slug === $cat->slug);
-                                    @endphp
+                                    ?>
                                     <li>
-                                        <a class="dropdown-item {{ $isActiveCat ? 'active' : '' }}" href="{{ route('productos.categoria', $cat->slug) }}">{{ $cat->nombre }}</a>
+                                        <a class="dropdown-item <?php echo e($isActiveCat ? 'active' : ''); ?>" href="<?php echo e(route('productos.categoria', $cat->slug)); ?>"><?php echo e($cat->nombre); ?></a>
                                     </li>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == 'comercializacion' ? 'active' : '' }}" href="/comercializacion">Comercialización</a>
+                            <a class="nav-link <?php echo e(request()->path() == 'comercializacion' ? 'active' : ''); ?>" href="/comercializacion">Comercialización</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == 'terminos-y-usos' ? 'active' : '' }}" href="/terminos-y-usos">Términos y Usos</a>
+                            <a class="nav-link <?php echo e(request()->path() == 'terminos-y-usos' ? 'active' : ''); ?>" href="/terminos-y-usos">Términos y Usos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->path() == 'contactanos' ? 'active' : '' }}" href="/contactanos">Contáctanos</a>
+                            <a class="nav-link <?php echo e(request()->path() == 'contactanos' ? 'active' : ''); ?>" href="/contactanos">Contáctanos</a>
                         </li>
-                        {{-- Auth links: login/register and user menu --}}
-                        @auth
-                            @php
+                        
+                        <?php if(auth()->guard()->check()): ?>
+                            <?php
                                 $isAdmin = false;
                                 if (auth()->check()) {
                                     try {
@@ -69,10 +69,10 @@
                                         $isAdmin = false;
                                     }
                                 }
-                            @endphp
+                            ?>
 
-                            @if(!$isAdmin)
-                                @php
+                            <?php if(!$isAdmin): ?>
+                                <?php
                                     $cartCount = 0;
                                     if (auth()->check()) {
                                         $carrito = \App\Models\VentaCabecera::where('user_id', auth()->id())
@@ -80,51 +80,52 @@
                                             ->first();
                                         $cartCount = $carrito ? $carrito->detalles()->count() : 0;
                                     }
-                                @endphp
+                                ?>
                                 <li class="nav-item ms-2">
-                                    <a class="nav-link position-relative" href="{{ auth()->check() ? route('cliente.carrito') : route('login') }}" title="Carrito">
+                                    <a class="nav-link position-relative" href="<?php echo e(auth()->check() ? route('cliente.carrito') : route('login')); ?>" title="Carrito">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                                             <path d="M0 1.5A.5.5 0 0 1 .5 1h1a.5.5 0 0 1 .485.379L2.89 5H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 14H4a.5.5 0 0 1-.491-.408L1.01 2H.5a.5.5 0 0 1-.5-.5zM3.14 6l1.25 6h8.22l1.2-6H3.14z"/>
                                             <path d="M6 12a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm6 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                                         </svg>
-                                        @if($cartCount > 0)
-                                            <span class="badge bg-danger rounded-pill position-absolute" style="top:0;right:0;transform:translate(30%,-30%);">{{ $cartCount }}</span>
-                                        @endif
+                                        <?php if($cartCount > 0): ?>
+                                            <span class="badge bg-danger rounded-pill position-absolute" style="top:0;right:0;transform:translate(30%,-30%);"><?php echo e($cartCount); ?></span>
+                                        <?php endif; ?>
                                     </a>
                                 </li>
-                            @endif
+                            <?php endif; ?>
 
                             <li class="nav-item dropdown ms-3">
                                 <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hola, {{ auth()->user()->nombre }}
+                                    Hola, <?php echo e(auth()->user()->nombre); ?>
+
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                                            @if($isAdmin)
+                                            <?php if($isAdmin): ?>
                                         <li><a class="dropdown-item" href="/admin">Ver Dashboard</a></li>
                                         <li><a class="dropdown-item" href="/usuarios">Usuarios</a></li>
                                         <li><a class="dropdown-item" href="/admin/ventas">Ventas</a></li>
                                         <li><a class="dropdown-item" href="/mensajes">Consultas</a></li>
-                                    @else
+                                    <?php else: ?>
                                         <li><a class="dropdown-item" href="/carrito">Mi carrito</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('cliente.compras') }}">Mis compras</a></li>
-                                    @endif
+                                        <li><a class="dropdown-item" href="<?php echo e(route('cliente.compras')); ?>">Mis compras</a></li>
+                                    <?php endif; ?>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <form action="{{ route('logout') }}" method="POST" class="m-0">
-                                            @csrf
+                                        <form action="<?php echo e(route('logout')); ?>" method="POST" class="m-0">
+                                            <?php echo csrf_field(); ?>
                                             <button type="submit" class="dropdown-item">Cerrar sesión</button>
                                         </form>
                                     </li>
                                 </ul>
                             </li>
-                        @else
+                        <?php else: ?>
                             <li class="nav-item ms-3">
                                 <a class="nav-link" href="/login">Login</a>
                             </li>
                             <li class="nav-item ms-2">
                                 <a class="nav-link" href="/registrar">Register</a>
                             </li>
-                        @endauth
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -132,7 +133,7 @@
     </header>
 
     <main class="flex-grow-1">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
     <footer class="bg-mate text-light py-5 mt-auto">
@@ -180,4 +181,4 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+</html><?php /**PATH C:\Users\almua\Herd\proyecto-taller\resources\views/layouts/app.blade.php ENDPATH**/ ?>

@@ -29,10 +29,23 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'required' => 'El campo :attribute es obligatorio.',
+            'string' => 'El campo :attribute debe ser texto.',
+            'max' => 'El campo :attribute no debe exceder :max caracteres.',
+            'unique' => 'El campo :attribute ya existe.',
+            'regex' => 'El campo :attribute no puede estar compuesto solo por espacios en blanco.',
+        ];
+
+        $attributes = [
+            'nombre' => 'nombre del rol',
+            'descripcion' => 'descripción',
+        ];
+
         $request->validate([
-            'nombre' => 'required|string|max:255|unique:roles',
-            'descripcion' => 'nullable|string',
-        ]);
+            'nombre' => 'required|string|min:2|max:255|unique:roles|regex:/\S/',
+            'descripcion' => 'nullable|string|max:500|regex:/\S/',
+        ], $messages, $attributes);
 
         Rol::create($request->only(['nombre', 'descripcion']));
         return redirect()->route('roles.index')->with('exito', 'Rol creado exitosamente.');

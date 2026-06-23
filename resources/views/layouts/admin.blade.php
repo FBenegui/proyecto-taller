@@ -40,7 +40,7 @@
                         <li class="nav-item">
                             <a class="nav-link d-flex justify-content-between align-items-center {{ request()->is('usuarios*') ? 'active' : '' }}" href="{{ route('usuarios.index') }}">
                                 <span>Usuarios</span>
-                                <span class="badge bg-secondary ms-2">{{ \App\Models\Usuario::count() ?? '—' }}</span>
+                                <span class="badge bg-secondary ms-2">{{ $totalUsuarios ?? '—' }}</span>
                             </a>
                         </li>
                         <li class="nav-item">

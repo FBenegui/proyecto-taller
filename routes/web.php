@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Models\Producto;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
@@ -9,7 +11,22 @@ use App\Http\Controllers\productoController;
 use App\Http\Controllers\CarritoController;
 
 Route::get('/', function () {
-    return view('inicio');
+    $productosDestacados = Producto::join('ventas_detalle', 'productos.id', '=', 'ventas_detalle.producto_id')
+        ->select('productos.*', DB::raw('SUM(ventas_detalle.cantidad) as total_vendido'))
+        ->where('productos.activo', true)
+        ->groupBy('productos.id')
+        ->orderByDesc('total_vendido')
+        ->take(3)
+        ->get();
+
+    if ($productosDestacados->isEmpty()) {
+        $productosDestacados = Producto::where('activo', true)
+            ->orderByDesc('id')
+            ->take(3)
+            ->get();
+    }
+
+    return view('inicio', compact('productosDestacados'));
 });
 Route::get('/sobre-nosotros', function () {
     return view('sobre-nosotros');
@@ -116,9 +133,21 @@ Route::post('/contacto/enviar', [App\Http\Controllers\ContactoController::class,
 
 Route::get('/mensajes', [App\Http\Controllers\ContactoController::class, 'index'])->name('mensajes.index');
 
-Route::get('/usuarios', [App\Http\Controllers\AdminController::class, 'verUsuarios'])->name('usuarios.index');
+Route::get('/usuarios', [App\Http\Controllers\AdminController::class, 'verUsuarios'])
+    ->name('usuarios.index')
+    ->middleware(['auth', 'rol:admin']);
 
-Route::get('/admin/ventas', [App\Http\Controllers\AdminController::class, 'verVentas'])->name('ventas.index');
+Route::get('/admin/usuarios/{id}/ventas', [App\Http\Controllers\AdminController::class, 'usuarioVentas'])
+    ->name('usuarios.ventas')
+    ->middleware(['auth', 'rol:admin']);
+
+Route::get('/admin/ventas', [App\Http\Controllers\AdminController::class, 'verVentas'])
+    ->name('ventas.index')
+    ->middleware(['auth', 'rol:admin']);
+
+Route::get('/admin/ventas/{id}', [App\Http\Controllers\AdminController::class, 'ventaDetalle'])
+    ->name('ventas.show')
+    ->middleware(['auth', 'rol:admin']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/cliente', function () {

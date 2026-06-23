@@ -8,6 +8,7 @@
                 <th>ID Venta</th>
                 <th>Cliente</th>
                 <th>Email</th>
+                <th>Acciones</th>
                 <th>Total</th>
                 <th>Fecha</th>
             </tr>
@@ -20,6 +21,9 @@
                 <td>{{ data_get($venta, 'usuario.email', '-') }}</td>
                 <td>${{ number_format(data_get($venta, 'total', 0), 2, ',', '.') }}</td>
                 <td>{{ optional(data_get($venta, 'fecha_venta') ?? data_get($venta, 'created_at'))->format('d/m/Y') }}</td>
+                <td>
+                    <a href="{{ route('ventas.show', data_get($venta, 'id')) }}" class="btn btn-sm btn-primary">Ver detalle</a>
+                </td>
             </tr>
             @endforeach
         </tbody>

@@ -14,22 +14,20 @@ class ContactoController extends Controller
             'string' => 'El campo :attribute debe ser texto.',
             'max' => 'El campo :attribute no debe exceder :max caracteres.',
             'email' => 'El :attribute debe ser un correo electrónico válido.',
-            'unique' => 'El :attribute ya ha sido registrado.',
             'min' => 'El campo :attribute debe tener al menos :min caracteres.',
-            'confirmed' => 'La confirmación de :attribute no coincide.',
+            'regex' => 'El campo :attribute no puede estar compuesto solo por espacios en blanco.',
         ];
 
         $attributes = [
             'nombre' => 'nombre',
-            'apellido' => 'apellido',
             'email' => 'correo electrónico',
-            'password' => 'contraseña',
+            'mensaje' => 'mensaje',
         ];
 
         $validated = $request->validate([
-            'nombre' => 'required|string|min:2|max:255',
+            'nombre' => 'required|string|min:2|max:255|regex:/\S/',
             'email' => 'required|email|max:255',
-            'mensaje' => 'required|string|min:5',
+            'mensaje' => 'required|string|min:10|max:1000|regex:/\S/',
         ], $messages, $attributes);
 
         // Guardamos el mensaje en la base de datos usando los datos validados

@@ -9,6 +9,7 @@
                 <th>Apellido</th>
                 <th>Email</th>
                 <th>Rol </th>
+                <th>Acciones</th>
 
             </tr>
         </thead>
@@ -18,7 +19,10 @@
                 <td>{{ $u->nombre }}</td>
                 <td>{{ $u->apellido }}</td>
                 <td>{{ $u->email }}</td>
-                <td>{{ $u->rol->nombre }}</td>
+                <td>{{ optional($u->rol)->nombre ?? 'Sin rol' }}</td>
+                <td>
+                    <a href="{{ route('usuarios.ventas', $u->id) }}" class="btn btn-sm btn-primary">Ver historial</a>
+                </td>
             </tr>
             @endforeach
         </tbody>

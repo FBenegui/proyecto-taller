@@ -80,10 +80,16 @@
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <span class="fs-4 fw-bold text-mate">${{ number_format($producto->precio, 0, ',', '.') }}</span>
 
-                                    <form class="ms-3" action="/carrito/agregar" method="POST" data-ajax="carrito" style="display:inline-block">
+                                    <form class="ms-3 d-inline-flex align-items-center" action="/carrito/agregar" method="POST" data-ajax="carrito" style="display:inline-block">
                                         @csrf
                                         <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                                        <input type="hidden" name="cantidad" value="1">
+
+                                        <div class="input-group me-2" style="width:140px;">
+                                            <button type="button" class="btn btn-outline-secondary btn-decrease-card" data-target="qty-{{ $producto->id }}">-</button>
+                                            <input id="qty-{{ $producto->id }}" type="number" name="cantidad" value="1" min="1" max="{{ $producto->stock }}" class="form-control form-control-sm text-center cantidad-input" style="width:60px;">
+                                            <button type="button" class="btn btn-outline-secondary btn-increase-card" data-target="qty-{{ $producto->id }}">+</button>
+                                        </div>
+
                                         <button type="submit" class="btn btn-primary btn-sm">Agregar</button>
                                     </form>
                                 </div>
@@ -243,6 +249,26 @@ document.addEventListener('DOMContentLoaded', function(){
                 body.innerHTML = '<div class="alert alert-danger">No se pudo cargar el detalle.</div>';
             }
         });
+    });
+
+    // Delegated handlers for quantity buttons in product cards
+    document.body.addEventListener('click', function(e){
+        const inc = e.target.closest('.btn-increase-card');
+        const dec = e.target.closest('.btn-decrease-card');
+        if (!inc && !dec) return;
+        e.preventDefault();
+        const targetId = (inc || dec).getAttribute('data-target');
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        const stock = parseInt(input.getAttribute('max')) || 0;
+        let val = parseInt(input.value) || 1;
+        if (inc) {
+            val = Math.min(stock || val + 1, val + 1);
+        } else {
+            val = Math.max(1, val - 1);
+        }
+        if (stock && val > stock) val = stock;
+        input.value = val;
     });
 });
 </script>

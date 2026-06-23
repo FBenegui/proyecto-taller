@@ -37,13 +37,21 @@ class AuthController extends Controller
             'apellido' => 'apellido',
             'email' => 'correo electrónico',
             'password' => 'contraseña',
+            'telefono' => 'teléfono',
+            'direccion' => 'dirección',
+            'codigo_postal' => 'código postal',
+            'ciudad' => 'ciudad o provincia',
         ];
 
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
+            'nombre' => 'required|string|min:2|max:255|regex:/\S/',
+            'apellido' => 'required|string|min:2|max:255|regex:/\S/',
             'email' => 'required|email|unique:usuarios,email',
             'password' => 'required|min:8|confirmed',
+            'telefono' => 'required|string|min:6|max:20|regex:/\S/',
+            'direccion' => 'required|string|min:5|max:255|regex:/\S/',
+            'codigo_postal' => 'required|string|min:4|max:20|regex:/\S/',
+            'ciudad' => 'required|string|min:2|max:100|regex:/\S/',
         ], $messages, $attributes);
 
         App::setLocale($previousLocale);
@@ -57,6 +65,10 @@ class AuthController extends Controller
             'nombre' => $request->nombre,
             'apellido' => $request->apellido,
             'email' => $request->email,
+            'telefono' => $request->telefono,
+            'direccion' => $request->direccion,
+            'codigo_postal' => $request->codigo_postal,
+            'ciudad' => $request->ciudad,
             'password' => bcrypt($request->password),
             'rol_id' => $clienteRole->id,
         ]);
@@ -65,21 +77,31 @@ class AuthController extends Controller
     }
 
     public function autenticar(Request $request){
-    $credenciales = $request->only(['email', 'password']);
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+        ], [
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'El correo electrónico debe ser una dirección válida.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+        ]);
 
-    if(Auth::attempt($credenciales)){
-        $request->session()->regenerate();
-        
-        // CAMBIO: Accedemos al nombre del rol a través de la relación
-        if(Auth::user()->rol->nombre === 'admin'){ 
-            return redirect('/admin');
+        $credenciales = $request->only(['email', 'password']);
+
+        if(Auth::attempt($credenciales)){
+            $request->session()->regenerate();
+            
+            // CAMBIO: Accedemos al nombre del rol a través de la relación
+            if(Auth::user()->rol->nombre === 'admin'){ 
+                return redirect('/admin');
+            }
+            return redirect('/cliente');
         }
-        return redirect('/cliente');
-    }
-    
-    return back()->withErrors([
-        'email' => 'Las credenciales no son correctas.',
-    ]);
+        
+        return back()->withErrors([
+            'email' => 'Las credenciales no son correctas.',
+        ]);
     }
 
     public function logOut(Request $request){

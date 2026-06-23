@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\VentaCabecera;
 
 class Usuario extends Authenticatable
 {
@@ -19,6 +20,10 @@ class Usuario extends Authenticatable
         'apellido',
         'email',
         'password',
+        'telefono',
+        'direccion',
+        'codigo_postal',
+        'ciudad',
         'rol_id',
         'estado'
     ];
@@ -37,5 +42,10 @@ class Usuario extends Authenticatable
     public function rol()
     {
         return $this->belongsTo(Rol::class, 'rol_id');
+    }
+
+    public function ventas()
+    {
+        return $this->hasMany(VentaCabecera::class, 'user_id');
     }
 }

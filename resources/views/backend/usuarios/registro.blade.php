@@ -77,6 +77,74 @@
                             @enderror
                         </div>
 
+                        <!-- Campo Teléfono -->
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label fw-semibold">Teléfono <span class="text-danger">*</span></label>
+                            <input type="text"
+                                class="form-control @error('telefono') is-invalid @enderror"
+                                id="telefono"
+                                name="telefono"
+                                value="{{ old('telefono') }}"
+                                placeholder="Ingrese su teléfono"
+                                required>
+                            @error('telefono')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Campo Dirección -->
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label fw-semibold">Dirección <span class="text-danger">*</span></label>
+                            <input type="text"
+                                class="form-control @error('direccion') is-invalid @enderror"
+                                id="direccion"
+                                name="direccion"
+                                value="{{ old('direccion') }}"
+                                placeholder="Calle, número, piso o referencia"
+                                required>
+                            @error('direccion')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Campo Código Postal -->
+                        <div class="mb-3">
+                            <label for="codigo_postal" class="form-label fw-semibold">Código Postal <span class="text-danger">*</span></label>
+                            <input type="text"
+                                class="form-control @error('codigo_postal') is-invalid @enderror"
+                                id="codigo_postal"
+                                name="codigo_postal"
+                                value="{{ old('codigo_postal') }}"
+                                placeholder="Ingrese su código postal"
+                                required>
+                            @error('codigo_postal')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
+                        <!-- Campo Ciudad / Provincia -->
+                        <div class="mb-3">
+                            <label for="ciudad" class="form-label fw-semibold">Ciudad o Provincia <span class="text-danger">*</span></label>
+                            <input type="text"
+                                class="form-control @error('ciudad') is-invalid @enderror"
+                                id="ciudad"
+                                name="ciudad"
+                                value="{{ old('ciudad') }}"
+                                placeholder="Ingrese su ciudad o provincia"
+                                required>
+                            @error('ciudad')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
                         <!-- Campo Contraseña -->
                         <div class="mb-3">
                             <label for="password" class="form-label fw-semibold">Contraseña <span class="text-danger">*</span></label>

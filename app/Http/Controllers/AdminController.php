@@ -16,13 +16,30 @@ class AdminController extends Controller
     }
 
     public function verUsuarios() {
-        $usuarios = \App\Models\Usuario::all();
+        $usuarios = \App\Models\Usuario::with('rol')->get();
         return view('backend.admin.usuarios.index', compact('usuarios'));
+    }
+
+    public function usuarioVentas($id)
+    {
+        $usuario = \App\Models\Usuario::with('ventas.detalles.producto')->findOrFail($id);
+        $ventas = $usuario->ventas ?? collect();
+
+        return view('backend.admin.ventas.historial', compact('usuario', 'ventas'));
     }
 
     public function verVentas()
     {
         $ventas = \App\Models\VentaCabecera::with('usuario')->get();
         return view('backend.admin.ventas.index', compact('ventas'));
+    }
+
+    public function ventaDetalle($id)
+    {
+        $compra = \App\Models\VentaCabecera::where('id', $id)
+                    ->with('detalles.producto', 'usuario')
+                    ->firstOrFail();
+
+        return view('backend.admin.ventas.detalle', compact('compra'));
     }
 }

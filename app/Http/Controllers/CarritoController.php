@@ -25,36 +25,56 @@ class CarritoController extends Controller
     } 
 
     public function agregar(Request $request){         
-        $request->validate([             
-            'producto_id' => 'required|exists:productos,id',             
-            'cantidad'    => 'required|integer|min:1',         
-        ]);         
-        $producto = Producto::findOrFail($request->producto_id);         
-        // Verificar stock antes de agregar         
-        if ($producto->stock < $request->cantidad) {             
-            return back()->with('error', 'No hay suficiente stock');         
-            }         
+        $request->validate([
+            'producto_id' => 'required|exists:productos,id',
+            'cantidad'    => 'required|integer|min:1',
+        ], [
+            'producto_id.required' => 'El producto es obligatorio.',
+            'producto_id.exists' => 'El producto seleccionado no es válido.',
+            'cantidad.required' => 'La cantidad es obligatoria.',
+            'cantidad.integer' => 'La cantidad debe ser un número entero.',
+            'cantidad.min' => 'La cantidad mínima es 1 unidad.',
+        ]);
+        $producto = Producto::findOrFail($request->producto_id);
         $carrito = $this->obtenerCarrito();         
         // ¿El producto ya está en el carrito?         
         $item = $carrito->detalles()                         
             ->where('producto_id', $producto->id)->first();         
-        if ($item) {             
-        // Si ya existe: suma la cantidad             
-        $item->cantidad += $request->cantidad;             
-        $item->subtotal  = $item->cantidad * $item->precio_unitario;             
-        $item->save();         
-        } 
-        else {             
-        // Si no existe: crea un nuevo ítem             
-        $carrito->detalles()->create([                 
-            'producto_id' => $producto->id,                 
-            'cantidad' => $request->cantidad,                 
-            'precio_unitario' => $producto->precio,                 
-            'subtotal' => $producto->precio * $request->cantidad,             
-            ]);         
-            }         
-        $this->recalcularTotal($carrito);         
-        return back()->with('success', 'Producto agregado al carrito');     
+        // Verificar stock antes de agregar (considerando la cantidad ya en el carrito)
+        $cantidadSolicitada = (int) $request->cantidad;
+        $cantidadExistente = $item ? (int) $item->cantidad : 0;
+        $totalDeseado = $cantidadExistente + $cantidadSolicitada;
+
+        if ((int) $producto->stock < $totalDeseado) {
+            // Responder apropiadamente según el tipo de solicitud
+            if ($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+                return response()->json(['error' => 'No hay suficiente stock', 'available' => (int)$producto->stock - $cantidadExistente], 422);
+            }
+            return back()->with('error', 'No hay suficiente stock');
+        }
+
+        if ($item) {
+            // Si ya existe: suma la cantidad
+            $item->cantidad = $totalDeseado;
+            $item->subtotal  = $item->cantidad * $item->precio_unitario;
+            $item->save();
+        } else {
+            // Si no existe: crea un nuevo ítem
+            $carrito->detalles()->create([
+                'producto_id' => $producto->id,
+                'cantidad' => $cantidadSolicitada,
+                'precio_unitario' => $producto->precio,
+                'subtotal' => $producto->precio * $cantidadSolicitada,
+            ]);
+        }
+
+        $this->recalcularTotal($carrito);
+
+        if ($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest') {
+            return response()->json(['message' => 'Producto agregado al carrito', 'added' => $cantidadSolicitada], 200);
+        }
+
+        return back()->with('success', 'Producto agregado al carrito');
     } 
 
     public function eliminar($id)
@@ -118,6 +138,10 @@ class CarritoController extends Controller
     {
         $request->validate([
             'cantidad' => 'required|integer|min:1',
+        ], [
+            'cantidad.required' => 'La cantidad es obligatoria.',
+            'cantidad.integer' => 'La cantidad debe ser un número entero.',
+            'cantidad.min' => 'La cantidad mínima es 1 unidad.',
         ]);
 
         $carrito = $this->obtenerCarrito();
