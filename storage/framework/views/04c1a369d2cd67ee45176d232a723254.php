@@ -62,7 +62,7 @@
                                 if (auth()->check()) {
                                     try {
                                         $user = \App\Models\Usuario::with('rol')->find(auth()->id());
-                                        if ($user && $user->rol && property_exists($user->rol, 'nombre')) {
+                                        if ($user && $user->rol && isset($user->rol->nombre)) {
                                             $isAdmin = $user->rol->nombre === 'admin';
                                         }
                                     } catch (\Exception $e) {
@@ -100,11 +100,8 @@
 
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                                            <?php if($isAdmin): ?>
+                                    <?php if($isAdmin): ?>
                                         <li><a class="dropdown-item" href="/admin">Ver Dashboard</a></li>
-                                        <li><a class="dropdown-item" href="/usuarios">Usuarios</a></li>
-                                        <li><a class="dropdown-item" href="/admin/ventas">Ventas</a></li>
-                                        <li><a class="dropdown-item" href="/mensajes">Consultas</a></li>
                                     <?php else: ?>
                                         <li><a class="dropdown-item" href="/carrito">Mi carrito</a></li>
                                         <li><a class="dropdown-item" href="<?php echo e(route('cliente.compras')); ?>">Mis compras</a></li>

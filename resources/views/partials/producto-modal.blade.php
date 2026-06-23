@@ -24,7 +24,7 @@
                         if ($userRole) {
                             if (is_string($userRole)) {
                                 $isAdmin = $userRole === 'admin';
-                            } elseif (is_object($userRole) && property_exists($userRole, 'nombre')) {
+                            } elseif (is_object($userRole) && isset($userRole->nombre)) {
                                 $isAdmin = $userRole->nombre === 'admin';
                             }
                         }
