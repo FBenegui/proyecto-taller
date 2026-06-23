@@ -12,9 +12,22 @@ use App\Http\Controllers\CarritoController;
 
 Route::get('/', function () {
     $productosDestacados = Producto::join('ventas_detalle', 'productos.id', '=', 'ventas_detalle.producto_id')
-        ->select('productos.*', DB::raw('SUM(ventas_detalle.cantidad) as total_vendido'))
+        ->select(
+            'productos.id',
+            'productos.nombre',
+            'productos.descripcion',
+            'productos.url_imagen',
+            'productos.precio',
+            DB::raw('SUM(ventas_detalle.cantidad) as total_vendido')
+        )
         ->where('productos.activo', true)
-        ->groupBy('productos.id')
+        ->groupBy(
+            'productos.id',
+            'productos.nombre',
+            'productos.descripcion',
+            'productos.url_imagen',
+            'productos.precio'
+        )
         ->orderByDesc('total_vendido')
         ->take(3)
         ->get();
